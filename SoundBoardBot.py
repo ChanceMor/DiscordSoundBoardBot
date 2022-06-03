@@ -45,18 +45,22 @@ async def join(ctx):
         await channel.connect()
     else:
         await ctx.send("you are not connected to a channel")
+        await ctx.message.delete()  
 
 @client.command(pass_context = True)
 async def leave(ctx):
     if(ctx.voice_client):
         await ctx.guild.voice_client.disconnect()
         await ctx.send("I LEFT")
+        await ctx.message.delete()  
     else:
         await ctx.send("I am not in a channel")
+        await ctx.message.delete()  
 
 @client.command(pass_context = True)
 async def sounds(ctx):
     await ctx.send(os.listdir("./Sounds"))
+    
 
 
 
