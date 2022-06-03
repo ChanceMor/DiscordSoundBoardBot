@@ -58,18 +58,25 @@ async def leave(ctx):
 async def sounds(ctx):
     await ctx.send(os.listdir("./Sounds"))
 
+
+
 @client.command(pass_context=True)
-async def RockWallDead(ctx):
+async def Play(ctx,soundname):
     if(ctx.voice_client==False):
         await join(ctx)
     if(ctx.author.voice):
         channel = ctx.message.author.voice.channel
         voice = await channel.connect()
-        source = FFmpegPCMAudio('./Sounds/Rock Wall Dead.mp3')
+        source = FFmpegPCMAudio('./Sounds/'+soundname+'.mp3')
         player =  voice.play(source)
+        while voice.is_playing():
+            sleep(.1)
+        await voice.disconnect()
 
+    await ctx.message.delete()   
+   
 @client.command(pass_context=True)
-async def Play(ctx,soundname):
+async def play(ctx,soundname):
     if(ctx.voice_client==False):
         await join(ctx)
     if(ctx.author.voice):
